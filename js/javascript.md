@@ -206,5 +206,54 @@
 </html>
 ```
 
+## 1.3vue中提交按钮使用防抖
 
+```js
+    <el-button type="primary"
+                     @click="updateYearAverageIndex">提交修改</el-button>
+import { debounce } from 'utils/common'
+
+updateYearAverageIndex: debounce(function () {
+      this.$refs.ruleForm.validate(async valid => {
+        if (valid) {
+          this.formLabel.yearAverageIndex = Number(this.formLabel.yearAverageIndex)
+          this.formLabel.serviceAbility = Number(this.formLabel.serviceAbility)
+          this.formLabel.partyDevAbility = Number(this.formLabel.partyDevAbility)
+          this.formLabel.governAbility = Number(this.formLabel.governAbility)
+          this.YearAverageIndexRes.data = this.formLabel
+          try {
+            const res = await updateYearAverageIndex(
+              this.agencyId,
+              this.YearAverageIndexRes
+            )
+            this.successTitle()
+          } catch (err) {
+            console.log(err)
+          }
+        } else {
+
+        }
+      })
+    }, 1000),
+```
+
+
+
+# 2.--save--dev
+
+-  使用命令 --save 或者说不写命令 --save ,都会把信息记录到 dependencies  中
+
+- dependencies 中记录的都是项目在运行时需要的文件；
+
+- 使用命令 --save-dev 则会把信息记录到 devDependencies 中；
+
+- devDependencies 中记录的是项目在开发过程中需要使用的一些文件，在项目最终运行时是不需要的；
+
+  ​           也就是说我们开发完成后，最终的项目中是不需要这些文件的；
+
+  
+
+- 总结: 开发的时候使用--save-dev 比如说eslint
+
+  ​			项目运行必须的依赖--save 比如说axios
 
